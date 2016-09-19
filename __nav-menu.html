@@ -41,10 +41,22 @@ window.onload=function(){
     var oNav=get.byId('nav');
     var aLi=get.byTagName('li',oNav);
     var aSubNav=get.byClass('subnav',oNav);
-    var 
+    var oSubNav=timer=oEm=null;
     for(var i=0;i<aLi.length;i++){
         aLi[i].onmouseover=function(){
-            
+            for(i=0;i<aSubNav.length;i++)aSubNav[i].style.display="none";
+            oSubNav=get.byClass("subnav",this)[0];
+            oEm=get.byTagName('em',this)[0];
+            oSubNav.style.display="block";
+            oNav.offsetWidth-this.offsetLeft>oSubNav.offsetWidth?
+            oSubNav.style.left=this.offsetLeft+"px" : oSubNav.style.right=0;
+            oEm.style.left=this.offsetLeft+50+"px";
+            clearTimeout(timer);
+        };
+        aLi[i].onmouseout=function(){
+            timer = setTimeout(function(){
+                oSubNav.style.display="none";
+            },300)
         }
     }
 }
