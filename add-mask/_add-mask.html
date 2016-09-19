@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+#target {
+    width: 200px;
+    height: 300px;
+    margin: 40px;
+    background-color: tomato;
+}
+</style>
+</head>
+<body>
+    
+
+<div id="target"></div>
+
+<script>
+function addMask (elem,opacity){
+    opacity=opacity || .2;
+    var style=getComputedStyle(elem,null);
+    var mask=document.createElement('div');
+    mask.style.position='absolute';
+    mask.style.left=(elem.offsetLeft-parseFloat(style.marginLeft))+"px";
+    mask.style.top=(elem.offsetTop-parseFloat(style.marginTop))+"px";
+    mask.style.width=(elem.offsetWidth+parseFloat(style.marginLeft)+parseFloat(style.marginRight))+"px";
+    mask.style.height=(elem.offsetHeight+parseFloat(style.marginTop)+parseFloat(style.marginBottom))+"px";
+    mask.style.zIndex=999;
+    mask.style.opacity=opacity;
+    mask.style.backgroundColor='black';
+    elem.parentNode.appendChild(mask);
+}
+var target=document.getElementById('target');
+addMask(target);
+target.addEventListener('click',function(){
+    console.log('click')
+},false);
+</script>
+</body>
+</html>
