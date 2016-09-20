@@ -20,62 +20,49 @@ body{background:#000;text-align:center;font:12px/20px Arial;}
 <script type="text/javascript">
 window.onload=function(){
 	var oBox=document.getElementById("box");
-	var aUl=document.getElementsByTagName("ul");
+	var aUl=oBox.getElementsByTagName("ul");
 	var aImg=aUl[0].getElementsByTagName("li");
 	var aNum=aUl[1].getElementsByTagName("li");
-	//null指未被实例化的空对象
-	var timer = play = null;
-	//声明i这样就不用每次循环都var i了
-	var i = index = 0;
-
+	var i=index=0;
+	var timer=play=null;
 	for(i=0;i<aNum.length;i++){
-	//自己创建了一个aNum的index属性用来存储索引值
-	//因为getElementsByTagName返回的值是对象组成的数组，所以aNum[i]可以添加自定义属性
 		aNum[i].index=i;
 		aNum[i].onmouseover=function(){
-			show(this.index)
+			show(this.index);
 		}
 	}
-	oBox.onmouseover=function(){
-		clearInterval(play)
-	};
-	oBox.onmouseout=function(){
-		autoPlay()
-	};
-	//先考虑show功能的实现最后再考虑自动切图的功能
+	function show(a){
+		index=a;
+		var opacity=0;
+		for(i=0;i<aNum.length;i++){
+			aNum[i].className="";
+			clearInterval(timer);
+			aNum[index].className="current";
+		}
+		for(i=0;i<aImg.length;i++){
+			aImg[i].style.opacity=0;
+		}
+		timer=setInterval(function(){
+			opacity+=0.02;
+			aImg[index].style.opacity=opacity;
+			opacity>=1 && (opacity=1);
+			opacity==1 && clearInterval(timer);
+		},20)
+	}
 	function autoPlay(){
 		play=setInterval(function(){
 			index++;
-			//比较符优先级大于逻辑符
-			index >= aImg.length && (index=0);
+			index>=aNum.length && (index=0);
 			show(index);
-		},2000);
+		},2000)
+	}
+	oBox.onmouseover=function(){
+		clearInterval(play);
+	}
+	oBox.onmouseout=function(){
+		autoPlay();
 	}
 	autoPlay();
-	//用设置interval实现透明度渐变，注意时间间隔足够小即可实现，原理也在此
-	function show (a) {
-		//每次mouseover都要改变全局变量index的值
-		index=a;
-		var alpha = 0;
-		for(i=0;i<aNum.length;i++)aNum[i].className="";
-		aNum[index].className = "current";
-		//保证上个interval未结束时将其停止
-		clearInterval(timer);
-
-		for(i=0;i<aImg.length;i++){
-			aImg[i].style.opacity=0;
-			aImg[i].style.filter="alpha(opacity=0)";
-		}
-
-		timer=setInterval(function(){
-			alpha +=2;
-			//这是条件语句
-			alpha > 100 && (alpha=100);
-			aImg[index].style.opacity=alpha/100;
-			aImg[index].style.filter="alpha(opacity ="+alpha+")";
-			alpha == 100 && clearInterval(timer);
-		},20)
-	}
 }
 </script>
 </head>
