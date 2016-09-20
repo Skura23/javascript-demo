@@ -30,8 +30,11 @@ window.onload=function(){
 
 	for(i=0;i<aNum.length;i++){
 	//自己创建了一个aNum的index属性用来存储索引值
-	//因为getElementsByTagName返回的值是对象组成的数组，所以aNum[i]可以添加自定义属性
+	//因为getElementsByTagName返回的值是对象组成的数组，所以aNum[i]可以添加自定义属性。用属性把i值提取出来
 		aNum[i].index=i;
+		//事件mover发生时才引用i，而此时i=aNum.length-1，故不能用show(i).
+		//这里的onmouseover不只是发号施令，还起到传递数据的作用.即告诉电脑哪个元素被onmouseover了
+		//this.index为this在aNum里所处的位置
 		aNum[i].onmouseover=function(){
 			show(this.index)
 		}

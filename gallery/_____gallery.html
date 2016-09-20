@@ -23,6 +23,21 @@ window.onload=function(){
 	var aUl=oBox.getElementsByTagName("ul");
 	var aImg=aUl[0].getElementsByTagName('li');
 	var aNum=aUl[1].getElementsByTagName('li');
+	var i=index=0;
+	var play=timer=null;
+	for(i=0;i<aNum.length;i++){
+		aNum[i].index=i;
+		aNum[i].onmouseover=function(){
+			show(this.index);
+		}
+	}
+	function show(a){
+		index=a;
+		for(i=0;i<aNum.length;i++){
+			aImg[i].style.opacity=0;
+			aImg[index].style.opacity=1;
+		}
+	}
 }
 
 </script>
