@@ -1,0 +1,56 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>css函数——设置/读取对象的属性</title>
+<style>
+div{width:400px;height:200px;background:#fef4eb;border:1px solid #f60;margin:0 auto;}
+input{border:0;color:#fff;cursor:pointer;font-weight:700;background:#f60;padding:2px 4px;margin:10px 0 0 10px;}
+</style>
+<script type="text/javascript">
+function css(obj,attr,value){
+	switch(arguments.length){
+		case 2:
+			if(typeof arguments[1] == "object")
+			{
+				//i为变量所以要用[i]表示，不然.i会当做属性识别，识别不了
+				for (var i in attr)obj.style[i] = attr[i]
+			}else{
+				//读取时直接用style只能获取到内嵌式style，内部、外部style均不能获取
+				//读取style时要考虑兼容性，设置时不用考虑，直接用style
+				//此句为了保证兼容性，后面那句适用于chrome,前面那句适用于ie
+				return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj,null)[attr]
+			}
+			break;
+		case 3:
+			obj.style[attr]=value;
+			break;
+		default:
+			alert("参数错误！")
+	}
+}
+window.onload=function(){
+	var oBox = document.getElementById("box");
+	var aInput=document.getElementsByTagName("input");
+
+	aInput[0].onclick=function(){
+		alert("width:" + css(oBox, 'width') + '\nheight:' + css(oBox,"height")+'\nbackground-color' + css(oBox,'backgroundColor'))
+	};
+	aInput[1].onclick=function(){
+		css(oBox,{width: "330px", height: "100px", borderColor: "#0084ff", backgroundColor: "#eff8ff"});
+		for (i=0;i<aInput.length;i++)css(aInput[i],"backgroundColor","#0084ff")
+	};
+	aInput[2].onclick=function(){
+		css(oBox,{width: "400px", height: "200px", borderColor: "#f60", backgroundColor: "#fef4eb"});
+		for(i=0;i<aInput.length;i++)css(aInput[i],"backgroundColor","#f60")
+	}
+}
+</script>
+</head>
+<body>
+<div id="box">
+	<input type="button" value="Get Style" /><input type="button" value="Set Style" /><input type="button" value="Default Style" />
+</div>
+</body>
+</html>
