@@ -1,0 +1,100 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>星级评分系统</title>
+<style>
+body,div,ul,li,p{margin:0;padding:0;}
+body{color:#666;font:12px/1.5 Arial;}
+ul{list-style-type:none;}
+#star{position:relative;width:600px;margin:10px auto;}
+#star ul,#star span{float:left;display:inline;height:19px;line-height:19px;}
+#star ul{margin:0 10px;position:relative}
+#star li{float:left;width:24px;cursor:pointer;text-indent:-9999px;background:url(http://fgm.cc/learn/lesson4/img/star.png) no-repeat;}
+#star strong{color:#f60;padding-left:10px;}
+#star li.on{background-position:0 -28px;}
+#star p{position:absolute;top:20px;width:159px;height:60px;display:none;background:url(http://fgm.cc/learn/lesson4/img/icon.gif) no-repeat;padding:7px 10px 0;}
+#star p em{color:#f60;display:block;font-style:normal;}
+</style>
+<script type="text/javascript">
+//原版更加简洁,因为它在循环内部做了比较，而不是外部
+window.onload = function ()
+{
+	var oStar = document.getElementById("star");
+	var aLi = oStar.getElementsByTagName("li");
+	var oUl = oStar.getElementsByTagName("ul")[0];
+	var oSpan = oStar.getElementsByTagName("span")[1];
+	var oP = oStar.getElementsByTagName("p")[0];
+	var i = cStar=hStar=0;
+
+	for (i=0;i<aLi.length;i++){
+		aLi[i].index=i;
+		//鼠标移入时删除点击的星星
+		aLi[i].onmouseover=function(){
+			for(i=0;i<aLi.length;i++){
+				aLi[i].className='';
+			}
+			oP.style.display='block';
+			oP.innerHTML=this.index+1+"aa";
+			oP.style.left=oUl.offsetLeft+this.offsetLeft+10-oP.offsetWidth/2+'px';
+			fnScore(this.index);
+		}
+		aLi[i].onclick=function(){
+			oSpan.style.display='block';
+			oSpan.innerHTML=this.index+1+"aa";
+			cStar=this.index;
+		}
+		aLi[i].onmouseout=function(){
+			out();
+			oP.style.display='none';
+		}
+	}
+	function out(){
+		//鼠标移出时删除hover的星星
+		for(i=0;i<aLi.length;i++){
+			aLi[i].className='';
+		}
+		for(i=0;i<cStar+1;i++){
+			aLi[i].className='on';
+		}
+	}
+	function fnScore(star){
+		for(i=0;i<star+1;i++){
+			aLi[i].className='on';
+		}
+	}
+		/*if(star || star==0){
+			for(i=0;i<star+1;i++){
+				aLi[i].className='on'
+			}
+			if (hStar)
+		}else{
+			for(i=0;i<aLi.length;i++){
+				aLi[i].className=''
+			}
+			for(i=0;i<cStar+1;i++){
+				aLi[i].className='on'
+			}
+			
+		}*/
+	
+}
+
+</script>
+</head>
+<body>
+<div id="star">
+    <span>点击星星就能打分</span>
+    <ul>
+        <li><a href="javascript:;">1</a></li>
+        <li><a href="javascript:;">2</a></li>
+        <li><a href="javascript:;">3</a></li>
+        <li><a href="javascript:;">4</a></li>
+        <li><a href="javascript:;">5</a></li>
+    </ul>
+    <span></span>
+    <p></p>
+</div>
+</body>
+</html>

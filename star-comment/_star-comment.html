@@ -18,6 +18,7 @@ ul{list-style-type:none;}
 #star p em{color:#f60;display:block;font-style:normal;}
 </style>
 <script type="text/javascript">
+//原版是把评分功能专门隔离出来，其他事件仅用来控制p,span
 window.onload=function(){
 	var oStar=document.getElementById('star');
 	var oSpan=oStar.getElementsByTagName('span')[1];
@@ -26,6 +27,7 @@ window.onload=function(){
 	//计算p的偏移时用到
 	var oUl=oStar.getElementsByTagName('ul')[0];
 	var i=0;
+	var mark=0;
 	var aMsg=[
 			"很不满意|差得太离谱，与卖家描述的严重不符，非常不满",
 			"不满意|部分有破损，与卖家描述的不符，不满意",
@@ -38,26 +40,52 @@ window.onload=function(){
 		aLi[i-1].index=i;
 		//鼠标移上显示星星
 		aLi[i-1].onmouseover=function(){
-			for(var p=0; p<this.index; p++){
-				aLi[p].className='on';
+			
+			if((mark-this.index) >0){
+				for(var p=this.index; p<aLi[mark]; p++){
+					aLi[p].className='';
+				} 
+			}else{
+				for(var p=0; p<this.index; p++){
+					aLi[p].className='on';
+				}
 			}
+
+			
 			oP.style.display='block';
-			oP.innerHTML="aaa";
+			oP.innerHTML=this.index+"aaa";
 			//这里注意offset..只可读，不可写
 			//注！：这里offsetLeft只认可已指定位置的元素，如position属性
 			oP.style.left=(this.offsetLeft+oUl.offsetLeft+10-(oP.offsetWidth)/2)+"px";
-			
+			//绑定onmouseout
+			this.addEventListener('mouseout',mouseOut,false);
 		}
-		//鼠标移开星星消失
-		aLi[i-1].onmouseout=function(){
+		
+		aLi[i-1].onclick=function(){
+			for(var p=0; p<this.index; p++){
+				aLi[p].className='on';
+			}
+			mark=this.index;
+			oSpan.innerHTML="<strong>"+this.index+" 分</strong>"+"a"
+			//解除绑定 onmouseout
+			this.removeEventListener('mouseout',mouseOut,false);
+			oP.style.display='none';
+		}
+	}
+
+	//鼠标移开星星消失
+	function mouseOut(){
+		if(mark==0){
 			for(var p=0; p<aLi.length; p++){
 				aLi[p].className='';
 			}
-			oP.style.display='none';
+		}else{
+			for (var p=0; p<aLi[mark]; p++){
+				aLi[p].className='on';
+			}
 		}
-		aLi[i-1].onclick=function(){
-
-		}
+		
+		oP.style.display='none';
 	}
 }
 
