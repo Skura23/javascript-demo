@@ -1,0 +1,127 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用键盘控制DIV</title>
+<style type="text/css">
+html,body{overflow:hidden;}
+body{margin:0;padding:0;}
+pre{color:green;padding:10px 15px;background:#f0f0f0;border:1px dotted #333;font:12px/1.5 Courier New;margin:12px;}
+span{color:#999;}
+#box{position:absolute;top:50px;left:300px;width:100px;height:100px;background:red;}
+</style>
+<script type="text/javascript">
+window.onload = function ()
+{
+	var oBox = document.getElementById("box");
+	var bLeft = bTop = bRight = bBottom = bCtrlKey = false;
+
+	setInterval(function(){
+		//直接在setInterval函数里加入判定
+		if(bLeft){
+			oBox.style.left=oBox.offsetLeft-10+'px';
+		}else if(bRight){
+			oBox.style.left=oBox.offsetLeft+10+'px';
+		}
+		if(bTop){
+			oBox.style.top=oBox.offsetTop-10+'px';
+		}else if(bBottom){
+			oBox.style.top=oBox.offsetTop+10+'px';
+		}
+		//限制移动范围
+		limit();
+	},30)
+
+	document.onkeydown=function(event){
+		var event=event || window.event;
+		bCtrlKey = event.ctrlKey;
+
+		switch(event.keyCode)
+		{
+			case 37:
+				bLeft= true;
+				break;
+			case 38:
+				if(bCtrlKey){
+					//这里的时间间隔采用的是系统默认的按键响应间隔时间
+					var oldWidth=oBox.offsetWidth;
+					var oldHeight=oBox.offsetHeight;
+					oBox.style.width=oBox.offsetWidth * 1.5+'px';
+					oBox.style.height=oBox.offsetHeight * 1.5+'px';
+					oBox.style.left=oBox.offsetLeft+(oldWidth-oBox.offsetWidth)/2+'px';
+					oBox.style.top=oBox.offsetTop+(oldHeight-oBox.offsetHeight)/2+'px';
+					//与下面没用break的形式对比，可知break作用是不再运行break后的内容
+					break;
+				}
+				bTop=true;
+				break;
+			case 39:
+				bRight=true;
+				break;
+			case 40:
+				if(bCtrlKey){
+					var oldWidth=oBox.offsetWidth;
+					var oldHeight=oBox.offsetHeight;
+					oBox.style.width=oBox.offsetWidth * 0.75+'px';
+					oBox.style.height=oBox.offsetHeight * 0.75+'px';
+					oBox.style.left=oBox.offsetLeft+(oldWidth-oBox.offsetWidth)/2+'px';
+					oBox.style.top=oBox.offsetTop+(oldHeight-oBox.offsetHeight)/2+'px';
+				}else{bBottom=true;}
+				break;
+			case 49:
+				bCtrlKey && (oBox.style.background = "green");
+				break;
+			case 50:
+				bCtrlKey && (oBox.style.background = "yellow");
+				break;
+			case 51:
+				bCtrlKey && (oBox.style.background = "blue");
+				break;
+		}
+		//取消所有默认事件绑定
+		return false;
+	}
+	document.onkeyup=function(event){
+	var event=event || window.event;
+	switch(event.keyCode){
+		case 37:
+			bLeft = false;
+			break;
+		case 38:
+			bTop = false;
+			break;
+		case 39:
+			bRight = false;
+			break;
+		case 40:
+			bBottom = false;
+			break;
+		}
+	}
+	function limit(){
+		var cWidth=document.documentElement.clientWidth;
+		var cHeight=document.documentElement.clientHeight;
+		(oBox.offsetLeft<=0) && (oBox.style.left=0);
+		(oBox.offsetTop<=0) && (oBox.style.top=0);
+		(oBox.offsetLeft+oBox.offsetWidth>=cWidth) && (oBox.style.left=cWidth-oBox.offsetWidth+'px');
+		(oBox.offsetTop+oBox.offsetHeight>=cHeight) && (oBox.style.top=cHeight-oBox.offsetHeight+'px')
+	}
+}
+</script>
+</head>
+<body>
+<pre>
+红色方块为键盘操作区域，您可以进行如下操作：
+
+上：↑ 下：↓ 左：← 右：→
+
+Ctrl + 1 : 背景变为绿色
+Ctrl + 2 : 背景变为黄色
+Ctrl + 3 : 背景变为蓝色
+Ctrl + ↑ : 放大
+Ctrl + ↓ : 缩小
+</pre>
+<div id="box"></div>
+</body>
+</html>
