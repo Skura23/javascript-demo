@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div style="width: 100px;height: 100px;background: blue;display: block">aa</div>
+	<div style="width: 100px;height: 100px;background: green;display: block">bb</div>
+	<p>aaaaaa</p>
+	<script type="text/javascript">
+		var i=0;
+		var div1=document.getElementsByTagName('div')[0];
+		var div2=document.getElementsByTagName('div')[1]
+		var p=document.getElementsByTagName('p')[0];
+		div2.onclick=function(){
+			i++;
+			i % 2==0 ?
+			(div1.style.display='block'):(div1.style.display='none')
+		}
+		p.onclick=function(){
+			alert(div1.offsetWidth)
+		}
+
+	</script>
+</body>
+</html>

@@ -25,11 +25,19 @@ window.onload=function(){
     for(i=0;i<aLi.length;i++){
         aLi[i].getElementsByTagName('ul')[0] && (aLi[i].className='sub');
         aLi[i].onmouseover=function(){
+            //以下运行出错的原因：
+            //offset只捕获当前位置数据，而此事件有以下几个步骤：
+            //1，hover一级菜单后，二级菜单显示
+            //2，移到后面菜单，触发mouseout，display变none，
+            //3，同时触发hover，offset捕获此时li的display为none，故其值为0
+            //4，hover二级菜单冒泡，触发一级菜单hover，虽然display变为block，但offset已捕获过，且捕获值为none，故为位置值0
             var oThis=this;
             oThis.className=oThis.className+' active';
             var oUl=oThis.getElementsByTagName('ul')[0];
             if(oUl){
                 oUl.style.display='block';
+                console.log(oThis.offsetWidth);
+                console.log(oUl.style.display);
                 oUl.style.left=oThis.offsetWidth+'px';
                 oUl.style.top=oThis.offsetTop+'px';
 
