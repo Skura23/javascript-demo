@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<button>aa</button>
+<button>bb</button>
+<script type="text/javascript">
+//为什么alert是3,因为没有块级作用域
+window.onload=function(){
+	var btn=document.getElementsByTagName('button');
+var p=[1,2]
+	for(var i=0;i<p.length;i++){
+		btn[i].onclick=function(){alert(p[i])}
+	}
+	console.log(i)	//2
+</script>
+</body>
+</html>
