@@ -1,0 +1,45 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>移动效果（按轨迹移动）</title>
+<style type="text/css">
+body,div{margin:0;padding:0;}
+div{position:absolute;width:66px;height:45px;background:black;top:100px;left:50px;}
+p,input{margin:10px;}
+</style>
+<script type="text/javascript">
+window.onload=function(){
+	var btns=document.getElementsByTagName('input');
+	var oDiv=document.getElementsByTagName('div')[0];
+	var dest=iSpeed=null;
+
+	btns[0].onclick=function(event){
+		var event=event || window.event;
+		//若是document.onclick=clickMove()则只触发一次
+		document.addEventListener('click',clickMove);
+		event.cancelBubble=true;
+	}
+	function clickMove(event){
+		var event=event || window.event;
+		dest=[event.clientX,event.clientY];
+		move(dest);
+	}
+	function move(dest){
+		 
+		
+		timer=setInterval(function(){
+			oDiv.style.left=oDiv.offsetLeft+(dest[0]- oDiv.offsetLeft)/10+'px';
+			oDiv.style.top=oDiv.offsetTop+(dest[1]- oDiv.offsetTop)/10+'px';
+		},30)
+	}
+}
+</script>
+</head>
+<body>
+<input type="button" value="根据鼠标点击位置移动" /><input type="button" value="根据标鼠标轨迹移动" />
+<p>请点击按钮激活功能！</p>
+<div></div>
+</body>
+</html>
