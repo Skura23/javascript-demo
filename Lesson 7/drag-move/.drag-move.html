@@ -23,16 +23,23 @@ window.onload=function(){
 	}
 	function clickMove(event){
 		var event=event || window.event;
+
 		dest=[event.clientX,event.clientY];
 		move(dest);
 	}
 	function move(dest){
-		 
-		
-		timer=setInterval(function(){
-			oDiv.style.left=oDiv.offsetLeft+(dest[0]- oDiv.offsetLeft)/10+'px';
-			oDiv.style.top=oDiv.offsetTop+(dest[1]- oDiv.offsetTop)/10+'px';
-		},30)
+		var iX=(dest[0]- oDiv.offsetLeft)/5;
+		var iY=(dest[1]- oDiv.offsetTop)/5;
+		iX=iX>0 ? Math.ceil(iX) : Math.floor(iX);
+		iY=iY>0 ? Math.ceil(iY) : Math.floor(iY);
+		if(){
+			clearInterval(timer)
+		}else{
+			timer=setInterval(function(){
+				oDiv.style.left=oDiv.offsetLeft+iX+'px';
+				oDiv.style.top=oDiv.offsetTop+iY+'px';
+			},30)
+		}
 	}
 }
 </script>
