@@ -14,6 +14,7 @@ window.onload=function(){
 	var btns=document.getElementsByTagName('input');
 	var oDiv=document.getElementsByTagName('div')[0];
 	var dest=iSpeed=null;
+	var timer = null;
 
 	btns[0].onclick=function(event){
 		var event=event || window.event;
@@ -25,21 +26,46 @@ window.onload=function(){
 		var event=event || window.event;
 
 		dest=[event.clientX,event.clientY];
-		move(dest);
+		//startMove(dest);
+		movenew(dest);
 	}
-	function move(dest){
+	function startMove(dest){
+		clearInterval(timer);
+		timer = setInterval(function(){
+			movenew(dest);
+		},30)
+	}
+	function movenew(dest){
+		clearInterval(timer);
+		timer = setInterval(function(){
+			var iX=(dest[0]- oDiv.offsetLeft)/5;
+			var iY=(dest[1]- oDiv.offsetTop)/5;
+			iX=iX>0 ? Math.ceil(iX) : Math.floor(iX);
+			iY=iY>0 ? Math.ceil(iY) : Math.floor(iY);
+			oDiv.style.left=oDiv.offsetLeft+iX+'px';
+			oDiv.style.top=oDiv.offsetTop+iY+'px';
+			if(oDiv.offsetLeft==dest[0] && oDiv.offsetTop==dest[1]){
+				clearInterval(timer)
+			} else {
+				oDiv.style.left = oDiv.offsetLeft + iX + "px";
+				oDiv.style.top = oDiv.offsetTop + iY + "px";
+			}
+		},30)
+	}
+	function movebest(dest){		
 		var iX=(dest[0]- oDiv.offsetLeft)/5;
 		var iY=(dest[1]- oDiv.offsetTop)/5;
 		iX=iX>0 ? Math.ceil(iX) : Math.floor(iX);
 		iY=iY>0 ? Math.ceil(iY) : Math.floor(iY);
-		if(){
+		oDiv.style.left=oDiv.offsetLeft+iX+'px';
+		oDiv.style.top=oDiv.offsetTop+iY+'px';
+		if(oDiv.offsetLeft==dest[0] && oDiv.offsetTop==dest[1]){
 			clearInterval(timer)
-		}else{
-			timer=setInterval(function(){
-				oDiv.style.left=oDiv.offsetLeft+iX+'px';
-				oDiv.style.top=oDiv.offsetTop+iY+'px';
-			},30)
+		} else {
+			oDiv.style.left = oDiv.offsetLeft + iX + "px";
+			oDiv.style.top = oDiv.offsetTop + iY + "px";
 		}
+	
 	}
 }
 </script>
