@@ -19,6 +19,12 @@ window.onload=function(){
 	btns[0].onclick=function(event){
 		var event=event || window.event;
 		//若是document.onclick=clickMove()则只触发一次
+		document.addEventListener('mousedown',clickMove);
+		document.addEventListener('mouseup',clickMove);
+		event.cancelBubble=true;
+	}
+	btns[1].onclick=function(){
+		var event=event || window.event;
 		document.addEventListener('click',clickMove);
 		event.cancelBubble=true;
 	}
@@ -31,9 +37,7 @@ window.onload=function(){
 	}
 	function startMove(dest){
 		clearInterval(timer);
-		timer = setInterval(function(){
-			movenew(dest);
-		},30)
+		movenew(dest);
 	}
 	function movenew(dest){
 		clearInterval(timer);
