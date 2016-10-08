@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	body{
+		background: #3e3e3e;
+	}
+	#box,#temp{
+		position: absolute;
+		top: 100px;
+		left: 100px;
+		width: 100px;
+		height: 100px;
+		background: black;
+		border: 1px solid white;
+		cursor: pointer;
+	}
+	#temp{
+		opacity: .3;
+		filter: alpha(opacity=30);
+	}
+	</style>
+</head>
+<body>
+	<div id="box"></div>
+<script type="text/javascript">
+window.onload=function(){
+	var oBox=document.getElementById('box');
+	var disX=disY=0;
+
+	oBox.onmousedown=function(event){
+		var event = event || window.event;
+		disX=event.clientX-this.offsetLeft;
+		disY=event.clientY-this.offsetTop;
+		var oTemp=document.createElement('div');
+		//命名新元素的id值
+		oTemp['id']='temp';
+		oTemp.style.left=this.currentStyle ? this.currentStyle['left'] : getComputedStyle(this,null)['left'];
+		oTemp.style.top=this.currentStyle ? this.currentStyle['top'] : getComputedStyle(this,null)['top'];
+		oTemp.style.zIndex++;
+		document.body.appendChild(oTemp);
+		document.onmousemove=function(event){
+			var event = event || window.event;
+			oTemp.style.left=event.clientX-disX+'px';
+			oTemp.style.top=event.clientY-disY+'px';
+		}
+		document.onmouseup=function(event){
+			var event = event || window.event;
+			//很重要，没有的话会触发事件
+			document.onmouseup = null;
+			oBox.style.left=oTemp.offsetLeft+'px';
+			oBox.style.top=oTemp.offsetTop+'px';
+			document.body.removeChild(oTemp);
+			document.onmousemove=function(){
+				return false;		
+			}
+		}
+	}
+	
+}
+</script>
+</body>
+</html>
