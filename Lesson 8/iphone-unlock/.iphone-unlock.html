@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	body{
+		margin: 100px;
+	}
+	.dis{
+		width: 200px;
+		height: 150px;
+		border: 2px solid gray;
+		text-align: center;
+		line-height: 150px;
+	}
+	.bar{
+		width: 198px;
+		height: 28px;
+		border: 2px solid black;
+		padding: 1px;
+	}
+	.box{
+		height: 28px;
+		width: 48px;
+		background: red;
+		text-align: center;
+		line-height: 30px;
+		font-size: 30px;
+		position: absolute;
+		cursor: pointer;
+		z-index: 2;
+	}
+	</style>
+</head>
+<body>
+	<div class="dis">Locked</div>
+	<div class="bar">
+		<div class="box">
+			<!-- 遮罩层，防止箭头字符被选中 -->
+			<div style="position: absolute;z-index: 1;width: 48px;
+			height: 28px"></div>
+			<div>→</div>
+		</div>
+	</div>
+<script type="text/javascript">
+window.onload = function (){
+	var oDis = document.getElementsByClassName('dis')[0];
+	var oBar = document.getElementsByClassName('bar')[0];
+	var oBox=document.getElementsByClassName('box')[0];
+	var disX=disY=0;
+	var disL=oBox.offsetLeft;
+	var disR=oBar.offsetWidth-oBox.offsetWidth+oBar.offsetLeft-3;
+
+	oBox.onmousedown=function(event){
+		var event=event || window.event;
+		disX=event.clientX-this.offsetLeft;
+		disY=this.offsetTop;
+		document.onmousemove=function(event){
+			var event=event || window.event;
+			if (event.clientX-disX <= disL){
+				oBox.style.left=disL+'px';
+				
+			}else if(event.clientX-disX >= disR){
+				oBox.style.left=disR+'px';
+				unLock();
+			}else{
+				oBox.style.left=event.clientX-disX+'px';
+			}
+		}
+	}
+	document.onmouseup=function(event){
+		var event=event || window.event;
+		document.onmousemove=function(){
+			return false;
+		}
+	}
+	function unLock(){
+		oDis.innerHTML='Unlocked';
+		oDis.style.background='yellow';
+	}
+}
+</script>
+</body>
+</html>
