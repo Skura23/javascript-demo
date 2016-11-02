@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Progress Bar</title>
+	<style type="text/css">
+	.wrapper{
+		width: 300px;
+	}
+	.bar{
+		width: 20px;
+		height: 35px;
+		margin: 0;
+		padding: 0;
+		background-color: #4caf50;
+	}
+	.bar-wrap{
+		width: 300px;
+		height: 35px;
+		margin: 0;
+		padding: 0;
+		background-color: #DDDDDD;
+	}
+	.btn{
+		display: block;
+		background-color: #4caf50;
+		width: 50px;
+		text-align: center;
+		height: 30px;
+		line-height: 30px;
+		float: left;
+		margin-top: 20px;
+		cursor: pointer;
+	}
+	.num,.perc{
+		display: block;
+		float: right;
+		margin-top: 20px;
+	}
+	</style>
+</head>
+<body>
+<div class="wrapper">
+	<div class="bar-wrap">
+		<div class="bar"></div>
+	</div>
+	<span class="btn">Run</span>
+	<span class="perc">%</span>
+	<span class="num"></span>
+</div>
+<script type="text/javascript">
+var btn=document.getElementsByClassName('btn')[0];
+var bar=document.getElementsByClassName('bar')[0];
+var barWrap=document.getElementsByClassName('bar-wrap')[0];
+var barWidth=bar.offsetWidth;
+var startWidth=bar.offsetWidth;
+var num=document.getElementsByClassName('num')[0];
+var t=null;
+var num1=parseInt((startWidth/barWrap.offsetWidth)*100);
+num.innerHTML=num1;
+
+btn.onclick=function () {	
+	t=setInterval('stretch()',10);
+}
+function stretch(){
+	barWidth+= (barWrap.offsetWidth-startWidth)/300;//设定速度
+	
+	if (barWidth>barWrap.offsetWidth) {  
+		clearInterval(t);
+		barWidth=barWrap.offsetWidth;
+	}
+	bar.style.width=barWidth+'px';
+	num1=parseInt((barWidth/barWrap.offsetWidth)*100);
+	num.innerHTML=num1;
+}
+
+
+</script>
+</body>
+</html>
