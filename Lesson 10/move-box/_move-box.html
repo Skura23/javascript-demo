@@ -11,7 +11,43 @@ body,div{margin:0;padding:0;}
 .box span{position:absolute;top:10px;left:10px;width:20px;height:20px;background:#999;display:block;opacity:1;}
 </style>
 <script type="text/javascript">
+var Animate = function (oElement, options, callback) {
+	this.initialize.apply(this, arguments)
+}
+Animate.prototype = {
+	initialize: function () {
+		var oThis = this;
+		this.options = options;
+		this.callback = callback;
+		this.oElement = typeof oElement === 'string' ? document.getElementById(oElement) : oElement;
+		clearInterval(this.timer);
+		this.timer = setInterval(function () {
+			oThis.doMove()
+		},30)
+	},
+	css: function (attr, value) {
+		//style获取的兼容性处理
+		if (arguments.length == 1) {
+			return parseFloat(this.oElement.currentStyle ? this.oElement.currentStyle[attr] : getComputedStyle(this.oElement, null)[attr])
+		}
+		//opacity的兼容性处理
+		else if(arguments.length == 2) {
+			attr == "opacity" ? (this.oElement.style.filter = "alpha(opacity=" + value + ")", this.oElement.style.opacity = value / 100) : this.oElement.style[attr] = value + "px";
+		}
+	},
+	doMove: function () {
+		var opt = this.options;
+		var bComplete = true;
+		for (var p in opt) {
+			var iCur = p == "opacity" ? parseInt(this.css(p).toFixed(2) * 100) : this.css(p);
+			var iSpeed = (opt[p] - iCur) /5;
+			iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+			opt[p] == iCur || (bComplete = false, this.css(p, iCur + iSpeed))
+		}
+		bComplete && (clearInterval(this.timer), this.callback && this.callback.call(this))
+	}
 
+}
 </script>
 </head>
 <body>
