@@ -180,10 +180,11 @@ window.onload=function () {
 			var minNum = Number.MAX_VALUE;
 			var minLi = null;
 
+			//循环比较，找到最小值  ！！
 			for (i = 0; i < aDistance.length; i++) {
 				aDistance[i] < minNum && (minNum = aDistance[i], minLi = filterLi[i]);
-			return minLi;
 			}
+			return minLi;
 		}
 	}
 	GAME();
@@ -222,7 +223,7 @@ function getDistance(obj1, obj2){
 	return Math.sqrt(a * a + b * b);
 }
 
-//碰撞检测  ??
+//碰撞检测,检测是否是接触的拼图块,二维范围判断
 function isButt(obj1, obj2)
 {
 	var l1 = obj1.offsetLeft;
@@ -253,6 +254,7 @@ function startMove(obj, pos, onEnd)
 		doMove(obj, pos, onEnd)
 	}, 30)	
 }
+//鼠标松开时拼图的运动
 function doMove(obj, pos, onEnd)
 {
 	var iCurL = getStyle(obj, "left");
