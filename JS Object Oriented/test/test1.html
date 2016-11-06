@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+	function show() {
+		alert(this);
+	}
+	show(); //window
+	new show(); //object,new在show里创建了一个空白的对象this
+</script>
+</body>
+</html>

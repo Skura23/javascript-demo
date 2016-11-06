@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+<script type="text/javascript">
+function CreatePerson (name, age) { //构造函数
+
+	/*系统在底层执行了 var this = new Object();*/
+
+	this.name = name;
+	this.age = age;
+	
+	/*系统在底层执行了 return this;*/
+}
+CreatePerson.prototype.getName = function () {
+		alert(this.name)
+}
+
+CreatePerson.prototype.getAge= function () {
+		alert(this.age)
+}
+
+var obj1 = new CreatePerson('John', 23);
+var obj2 = new CreatePerson('Kelly', 23);
+
+obj1.getName();
+obj1.getAge();
+obj2.getName();
+//同一原型方法相同，解决工厂模式重复函数资源占用的问题
+alert(obj1.getName == obj2.getName);  
+
+</script>
+</body>
+</html>

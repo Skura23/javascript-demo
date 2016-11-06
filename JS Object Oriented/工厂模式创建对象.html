@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+<script type="text/javascript">
+function createPerson (name, age) {
+	//原料
+	var obj = new Object();
+	//加工
+	obj.name = name;
+	obj.age = age;
+	obj.getName = function () {
+		alert(obj.name)
+	}
+	obj.getAge = function () {
+		alert(obj.age)
+	}
+	//出厂
+	return obj;
+}
+var obj1 =new createPerson('John', 23);
+
+obj1.getName();
+obj1.getAge();
+
+</script>
+</body>
+</html>
