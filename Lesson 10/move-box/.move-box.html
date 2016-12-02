@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	.box{
+		position: relative;
+		width: 500px;
+		height: 200px;
+		border: 1px solid black;
+		padding: 5px;
+		margin-top: 10px;
+	}
+	.bar{
+		position: absolute;
+		width: 50px;
+		height: 50px;
+		background: gray;
+	}
+	</style>
+</head>
+<body>
+	<div class="wra">
+		<button>开始</button>
+		<div class="box">
+			<div class="bar"></div>
+		</div>
+	</div>
+<script type="text/javascript">
+window.onload = function (){
+	var data = [
+		{width: '70px', height: '70px'},
+		{left: '200px'},
+		{top: '100px'},
+		{width: '100px', height: '100px'}
+	];
+	var oBox = document.getElementsByClassName('box')[0];
+	var oBar = document.getElementsByClassName('bar')[0];
+	var btn = document.getElementsByTagName('button')[0];
+	var i = 0;
+
+	btn.addEventListener('click', handleChange, false);
+	function handleChange(){
+		for(i = 0; i < data.length; i++){
+			data[i].index = i;
+		}
+		change(data[0])
+	}
+	
+	function change(oData){
+		var barWidth = oBar.offsetWidth;
+		var barHeight= oBar.offsetHeight;
+		var barLeft = oBar.offsetLeft;
+		var barTop = oBar.offsetTop;
+		
+		for (var key in oData){
+			if(key == 'width'){
+				var val = parseInt(oData[key]);
+				var t = setInterval(function(){
+					if (oBar.offsetWidth >= val) {
+						clearInterval(t);
+						change(data[oData.index+1]);
+						return
+					};
+					barWidth += 1;
+					oBar.style.width = barWidth + 'px';
+				}, 10)
+			} else if(key == 'height'){
+				var val = parseInt(oData[key]);
+				var g = setInterval(function(){
+					if (oBar.offsetHeight >= val) {
+						clearInterval(g);
+						change(data[oData.index+1]);
+						return
+					};
+					barHeight += 1;
+					oBar.style.height = barHeight + 'px';
+				}, 10)
+			}else if (key == 'left'){
+				var val = parseInt(oData[key]);
+				var p = setInterval(function(){
+					if (oBar.offsetLeft >= val) {
+						clearInterval(p);
+						change(data[oData.index+1]);
+						return
+					};
+					barLeft += 1;
+					oBar.style.left = barLeft + 'px';
+				}, 10)
+			}else if (key == 'top'){
+				var val = parseInt(oData[key]);
+				var e = setInterval(function(){
+					if (oBar.offsetTop >= val) {
+						clearInterval(e);
+						change(data[oData.index+1]);
+						return
+					};
+					barTop += 1;
+					oBar.style.top = barTop + 'px';
+				}, 10)
+			}
+		}
+		
+	}
+}
+</script>
+</body>
+</html>

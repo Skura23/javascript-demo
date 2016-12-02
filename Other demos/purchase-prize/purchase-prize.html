@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<div class="wrapper">
+	<button class="minus">-</button>
+	<span class="amount">0</span>
+	<button class="add">+</button>
+	<span>单价：<em class="price">12.5</em> 元,</span>
+	<span>花费：<strong class="cost">0</strong> 元</span>
+</div>
+<script type="text/javascript">
+var wrapper = document.getElementsByClassName('wrapper')[0];
+var minus = wrapper.getElementsByClassName('minus')[0];
+var add = wrapper.getElementsByClassName('add')[0];
+var oAmount = wrapper.getElementsByClassName('amount')[0];
+var oPrice = wrapper.getElementsByClassName('price')[0];
+var oCost = wrapper.getElementsByClassName('cost')[0];
+var cost = amount = 0;
+
+add.onclick = function() {
+	amount++;
+	cost = amount*oPrice.innerHTML;
+	oAmount.innerHTML = amount;
+	oCost.innerHTML = cost;
+}
+minus.onclick = function () {
+	amount == 0 ?(amount = 0) : amount --;
+	cost = amount*oPrice.innerHTML;
+	oAmount.innerHTML = amount;
+	oCost.innerHTML = cost;
+}
+
+
+</script>
+</body>
+</html>

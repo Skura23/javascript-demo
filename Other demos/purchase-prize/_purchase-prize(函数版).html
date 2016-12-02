@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<div class="wrapper">
+	<button>-</button>
+	<span class="amount">0</span>
+	<button>+</button>
+	<span>单价：<em class="price">12.5</em> 元,</span>
+	<span>花费：<strong class="cost">0</strong> 元</span>
+</div>
+<div class="wrapper">
+	<button>-</button>
+	<span class="amount">0</span>
+	<button>+</button>
+	<span>单价：<em class="price">10.5</em> 元,</span>
+	<span>花费：<strong class="cost">0</strong> 元</span>
+</div>
+<div class="wrapper">
+	<button>-</button>
+	<span class="amount">0</span>
+	<button>+</button>
+	<span>单价：<em class="price">9</em> 元,</span>
+	<span>花费：<strong class="cost">0</strong> 元</span>
+</div>
+<script type="text/javascript">
+window.onload = function () {
+	//此程序里price有异，又因price取自wrapper，故wrapper有异，
+	//因此将wrapper作为参数传递
+	var aWrapper = document.getElementsByClassName('wrapper');
+
+	function fn (oWrapper) {
+		var aBtn = oWrapper.getElementsByTagName('button');
+		var oAmount = oWrapper.getElementsByClassName('amount')[0];
+		var oPrice = oWrapper.getElementsByClassName('price')[0];
+		var oCost = oWrapper.getElementsByClassName('cost')[0];
+		var amount = Number(oAmount.innerHTML);
+		var price = Number(oPrice.innerHTML);
+		var cost = Number(oCost.innerHTML);
+
+		aBtn[0].onclick = function () {
+			amount == 0 ? (amount = 0) : amount--;
+			cost = amount * price;
+			oAmount.innerHTML = amount;
+			oCost.innerHTML = cost;
+		}
+		aBtn[1].onclick = function () {
+			amount++;
+			cost = amount * price;
+			oAmount.innerHTML = amount;
+			oCost.innerHTML = cost;
+		}
+	}
+	
+	for ( var i = 0; i < aWrapper.length; i++) {
+		fn(aWrapper[i])
+	}
+}
+
+
+</script>
+</body>
+</html>

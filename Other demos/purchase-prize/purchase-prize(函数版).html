@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<div class="wrapper">
+	<button class="minus">-</button>
+	<span class="amount">0</span>
+	<button class="add">+</button>
+	<span>单价：<em class="price">12.5</em> 元,</span>
+	<span>花费：<strong class="cost">0</strong> 元</span>
+</div>
+<div class="wrapper">
+	<button class="minus">-</button>
+	<span class="amount">0</span>
+	<button class="add">+</button>
+	<span>单价：<em class="price">20</em> 元,</span>
+	<span>花费：<strong class="cost">0</strong> 元</span>
+</div>
+<div class="wrapper">
+	<button class="minus">-</button>
+	<span class="amount">0</span>
+	<button class="add">+</button>
+	<span>单价：<em class="price">9</em> 元,</span>
+	<span>花费：<strong class="cost">0</strong> 元</span>
+</div>
+<script type="text/javascript">
+var wrapper = document.getElementsByClassName('wrapper');
+var i = cost = amount = 0;
+
+function app() {
+	for (i = 0; i < wrapper.length; i++) {
+		var minus = wrapper[i].getElementsByClassName('minus');
+		var add = wrapper[i].getElementsByClassName('add');
+		var oAmount = wrapper[i].getElementsByClassName('amount');
+		var oPrice = wrapper[i].getElementsByClassName('price');
+		var oCost = wrapper[i].getElementsByClassName('cost');
+		add[i].onclick = function() {
+			amount++;
+			cost = amount*oPrice[i].innerHTML;
+			oAmount[i].innerHTML = amount;
+			oCost[i].innerHTML = cost;
+		}
+		minus[i].onclick = function () {
+			amount == 0 ?(amount = 0) : amount --;
+			cost = amount*oPrice.innerHTML;
+			oAmount[i].innerHTML = amount;
+			oCost[i].innerHTML = cost;
+		}
+	}
+}
+app();
+
+
+
+</script>
+</body>
+</html>
