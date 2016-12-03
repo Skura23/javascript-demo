@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	.box{
+		position: relative;
+		width: 500px;
+		height: 200px;
+		border: 1px solid black;
+		padding: 5px;
+		margin-top: 10px;
+	}
+	.bar{
+		position: absolute;
+		width: 50px;
+		height: 50px;
+		background: gray;
+	}
+	</style>
+</head>
+<body>
+	<div class="wra">
+		<button>开始</button>
+		<div class="box">
+			<div class="bar"></div>
+		</div>
+	</div>
+<script type="text/javascript">
+window.onload = function (){
+	var data = [
+		{width: '50px', height: '50px'},
+		{width: '100px', height: '100px'},
+		{left: '5px'},
+		{left: '100px'},
+		{top: '5px'},
+		{top: '105px'},
+		{left: '100px'},
+		{left: '5px'},
+	];
+	var oBtn = document.querySelector('button');
+	var oBar = document.querySelector('.bar');
+	var i = 0;
+	oBtn.flag = true;
+
+	oBtn.onclick = function(){
+		animate();
+	}
+	function animate (){
+		
+		var timer = setInterval(function(){
+			var dest = 0;
+			var bComplete = false;
+			for(var k in data[i]){
+				dest = parseInt(data[i][k]);
+				console.log(dest);
+				var bCur = parseInt(getComputedStyle(oBar, null)[k]);
+				var bSpeed = (dest - bCur)/5;
+				bSpeed = bSpeed > 0 ? Math.ceil(bSpeed) : Math.floor(bSpeed);
+				bCur == dest ? (bComplete = true) : ( oBar.style[k] = bCur + bSpeed + 'px');
+				console.log(bSpeed)
+			}
+			//此语句要放在for语句外，否则data[0]时会触发两次
+			bComplete && (clearInterval(timer), (oBtn.flag ? i++ : i--), animate());
+		}, 30)
+		if(i == data.length || i == -1){
+			i == data.length && (i=data.length-1);
+			i == -1 && (i = 0);
+			oBtn.flag = !oBtn.flag;
+			oBtn.flag ? oBtn.innerHTML = '开始' : oBtn.innerHTML = '原路返回';
+			clearInterval(timer)
+			
+		}
+		
+	}
+}
+</script>
+</body>
+</html>
